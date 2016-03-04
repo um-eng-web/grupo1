@@ -1,3 +1,4 @@
+require_relative '../Business/utilizador'
 class Apostador < Utilizador
 	attr_accessor :saldo, :lista_apostas, :notificacoes
 
