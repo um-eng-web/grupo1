@@ -57,6 +57,11 @@ class BetESS
     evento.fechar_evento
   end
 
+  def concluir_evento (id, resultado)
+    raise EventoInexistenteError, 'Evento inexistente, ainda aberto ou já concluído' unless @eventos.has_key?(id) && !@eventos[id].is_open && @eventos[id].resultado == Evento::EVENTO_NAO_CONCLUIDO
+    evento = @eventos[id]
+    evento.concluir_evento(resultado)
+  end
 
   def registar_aposta(event, escolha, quantia, apostador)
     apostador.regista_aposta(next_id_aposta, event, escolha, quantia)
@@ -67,5 +72,4 @@ class BetESS
     raise EventoInexistenteError, 'Não existe nenhuma aposta aberta com este identificador!' unless @eventos.has_key?(id) && @eventos[id].is_open
     @eventos[id]
   end
-
 end
