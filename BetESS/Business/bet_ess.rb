@@ -64,7 +64,7 @@ class BetESS
   end
 
   def get_evento_aberto(id)
-    raise EventoInexistenteException, 'Não existe nenhuma aposta aberta com este identificador!' unless @eventos.has_key?(id) && @eventos[id].is_open
+    raise EventoInexistenteError, 'Não existe nenhuma aposta aberta com este identificador!' unless @eventos.has_key?(id) && @eventos[id].is_open
     @eventos[id]
   end
 

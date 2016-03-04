@@ -3,6 +3,7 @@ require_relative '../Business/pesquisa'
 require_relative '../Menus/aux_print'
 require_relative '../Exceptions/evento_inexistente_error'
 require_relative '../Exceptions/fundos_insuficientes_error'
+require_relative '../Business/pesquisa'
 class ApostadorMenu
   attr_accessor :bet_ess, :apostador
 
@@ -31,9 +32,9 @@ class ApostadorMenu
       when '1'
         menu_aposta
       when '2'
-        lista_aposta_abertas_pessoais
+        AuxPrint.listar(Pesquisa.lista_aposta_abertas_pessoais(@apostador.lista_apostas))
       when '3'
-        lista_apostas_pessoais
+        AuxPrint.listar(Pesquisa.lista_apostas_pessoais)
       when '4'
         depositar_quant
       when '5'

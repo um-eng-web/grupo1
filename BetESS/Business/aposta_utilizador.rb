@@ -9,4 +9,27 @@ class ApostaUtilizador < Evento
     @escolha = escolha
     @data = data
   end
+
+
+  def to_s
+    super.to_s + "\nData: #{@data.day}-#{@data.month}-#{@data.year}  #{@data.hour}:#{@data.min}\nEscolha: " +
+    case(@escolha)
+      when 0
+        "\tEmpate"
+        if @is_open
+          "Ganho potencial: #{@quantia*@odds_atuais.odd_empate}"
+        end
+      when 1
+        "#{@team1}"
+        if @is_open
+          "Ganho potencial: #{@quantia*@odds_atuais.odd_team1}"
+        end
+      else
+        "#{@team2}"
+        if @is_open
+          "Ganho potencial: #{@quantia*team2}"
+        end
+    end
+  end
+
 end
