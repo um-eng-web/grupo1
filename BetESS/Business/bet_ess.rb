@@ -5,13 +5,13 @@ require_relative '../Exceptions/utilizador_inexistente_error'
 require_relative '../Exceptions/password_errada_error'
 require_relative '../Business/evento'
 class BetESS
-  attr_accessor :search, :utilizadores, :eventos
+  attr_accessor :utilizadores, :eventos
   attr_reader :next_id_evento, :next_id_aposta, :saldo_inicial
 
   def initialize
       @utilizadores = Hash.new
       @eventos = Hash.new
-      @search = Pesquisa.new
+      #@search = Pesquisa.new
       @next_id_aposta = 1
       @next_id_evento = 1
       @saldo_inicial = 10

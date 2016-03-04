@@ -8,6 +8,8 @@ require_relative '../Exceptions/password_errada_error'
 require_relative '../Business/administrador'
 require_relative '../Business/bookie'
 require_relative '../Business/apostador'
+require_relative '../Business/pesquisa'
+require_relative '../Business/evento'
 
 class MenuPrincipal
   attr_accessor :bet_ess
@@ -15,7 +17,11 @@ class MenuPrincipal
   def initialize
     @bet_ess = BetESS.new
     @bet_ess.add_utilizador(Administrador.new('123', '123', '123'))
-    @bet_ess.add_utilizador(Bookie.new('b1', 'b1', 'b1'))
+    b = Bookie.new('b1', 'b1', 'b1')
+    @bet_ess.add_utilizador(b)
+    @bet_ess.add_evento("FC Porto", "SL Benfica", 1.01, 1.21, 200.0, "Futebol", Time.now, b)
+    @bet_ess.add_evento("SC Braga", "Sporting CP", 1.01, 1.21, 200.0, "Futebol", Time.now, b)
+    @bet_ess.add_evento("Vitoria", "Belenenses", 200, 1.21, 1.01, "Futebol", Time.now, b)
   end
 
   def menu_principal
