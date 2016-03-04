@@ -9,7 +9,7 @@ require_relative '../Exceptions/evento_inexistente_error'
 class BetESS
   attr_accessor :utilizadores, :eventos
   attr_reader :next_id_evento, :next_id_aposta, :saldo_inicial
-
+  include(Pesquisa)
   def initialize
       @utilizadores = Hash.new
       @eventos = Hash.new
@@ -37,11 +37,11 @@ class BetESS
     @next_id_evento += 1
   end
 
-  def adiciona_quant(quantia, apostador)
+  def adicionar_quant(quantia, apostador)
     apostador.adiciona_saldo(quantia)
   end
 
-  def retira_quant(quantia, apostador)
+  def retirar_quant(quantia, apostador)
     apostador.remove_saldo(quantia)
   end
 
@@ -50,7 +50,7 @@ class BetESS
   end
 
   def fechar_evento (id)
-    eventos_abertos = Pesquisa.get_eventos_abertos(@eventos)
+    eventos_abertos = get_eventos_abertos(@eventos)
     raise EventoInexistenteError, 'Evento inexistente ou já foi fechado anteriormente!' unless eventos_abertos.has_key?(id)
 
     evento = eventos_abertos[id]

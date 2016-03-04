@@ -4,12 +4,10 @@ class Bookie < Utilizador
   attr_accessor :eventos_bookie
   attr_accessor :notificacoes
 
-  def initialize (nome = '', email = '', password = '', eventos_bookie = Hash.new, notificacoes = [])
+  def initialize (nome = '', email = '', password = '', notificacoes = [])
     super(nome, email, password)
-    @eventos_bookie = eventos_bookie
     @notificacoes = notificacoes
   end
-
 
   def update (evento, tipo)
     case tipo
@@ -24,4 +22,9 @@ class Bookie < Utilizador
         @notificacoes.push(n)
     end
   end
+
+  def ==(o)
+    o.class == self.class && o.email == self.email && o.nome == self.nome
+  end
+
 end

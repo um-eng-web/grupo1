@@ -1,6 +1,5 @@
 require_relative '../Business/bookie'
 require_relative '../Exceptions/utilizador_ja_existe_error'
-require_relative '../Business/pesquisa'
 require_relative '../Business/bet_ess'
 require_relative '../Menus/aux_print'
 require_relative '../Exceptions/evento_inexistente_error'
@@ -14,7 +13,7 @@ class AdministradorMenu
   end
 
   def fechar_evento
-    eventos_abertos = Pesquisa.get_eventos_abertos(@bet_ess.eventos)
+    eventos_abertos = @bet_ess.get_eventos_abertos(@bet_ess.eventos)
     AuxPrint.listar(eventos_abertos)
     unless eventos_abertos.empty?
       puts '###########################################################################'
@@ -32,7 +31,7 @@ class AdministradorMenu
   end
 
   def concluir_evento
-    eventos_fechados = Pesquisa.get_eventos_fechados(@bet_ess.eventos)
+    eventos_fechados = @bet_ess.get_eventos_fechados(@bet_ess.eventos)
     AuxPrint.listar(eventos_fechados)
     unless eventos_fechados.empty?
       puts '###########################################################################'

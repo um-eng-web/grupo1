@@ -40,4 +40,8 @@ class Evento
   def to_s
     "\n\nModalidade: #{@desporto}\nEvento: #{@id}\nData de fecho: #{@closing_time.ctime}\n#{@team1} (#{@odds_atuais.odd_team1})\tEmpate (#{@odds_atuais.odd_empate})\t#{@team2} (#{@odds_atuais.odd_team2})"
   end
+
+  def ==(o)
+    o.class == self.class && o.id == self.id
+  end
 end
