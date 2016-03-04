@@ -6,29 +6,29 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff:
-./BetESS/.idea/workspace.xml
-./BetESS/.idea/tasks.xml
-./BetESS/.idea/dictionaries
-./BetESS/.idea/vcs.xml
-./BetESS/.idea/jsLibraryMappings.xml
+BetESS/.idea/workspace.xml
+BetESS/.idea/tasks.xml
+BetESS/.idea/dictionaries
+BetESS/.idea/vcs.xml
+BetESS/.idea/jsLibraryMappings.xml
 
 # Sensitive or high-churn files:
-./BetESS/.idea/dataSources.ids
-./BetESS/.idea/dataSources.xml
-./BetESS/.idea/dataSources.local.xml
-./BetESS/.idea/sqlDataSources.xml
-./BetESS/.idea/dynamic.xml
-./BetESS/.idea/uiDesigner.xml
+BetESS/.idea/dataSources.ids
+BetESS/.idea/dataSources.xml
+BetESS/.idea/dataSources.local.xml
+BetESS/.idea/sqlDataSources.xml
+BetESS/.idea/dynamic.xml
+BetESS/.idea/uiDesigner.xml
 
 # Gradle:
-./BetESS/.idea/gradle.xml
-./BetESS/.idea/libraries
+BetESS/.idea/gradle.xml
+BetESS/.idea/libraries
 
 # Mongo Explorer plugin:
-./BetESS/.idea/mongoSettings.xml
+BetESS/.idea/mongoSettings.xml
 
 ## File-based project format:
-./BetESS/*.iws
+BetESS/*.iws
 
 ## Plugin-specific files:
 
@@ -36,7 +36,7 @@
 /out/
 
 # mpeltonen/sbt-idea plugin
-./BetESS/.idea_modules/
+BetESS/.idea_modules/
 
 # JIRA plugin
 atlassian-ide-plugin.xml
@@ -49,33 +49,33 @@ fabric.properties
 
 
 ### Ruby ###
-./BetESS/*.gem
-./BetESS/*.rbc
-./BetESS/.config
-./BetESS/coverage/
-./BetESS/InstalledFiles
-./BetESS/pkg/
-./BetESS/spec/reports/
-./BetESS/spec/examples.txt
-./BetESS/test/tmp/
-./BetESS/test/version_tmp/
-./BetESS/tmp/
+BetESS/*.gem
+BetESS/*.rbc
+BetESS/.config
+BetESS/coverage/
+BetESS/InstalledFiles
+BetESS/pkg/
+BetESS/spec/reports/
+BetESS/spec/examples.txt
+BetESS/test/tmp/
+BetESS/test/version_tmp/
+BetESS/tmp/
 
 ## Specific to RubyMotion:
-./BetESS/.dat*
-./BetESS/.repl_history
-./BetESS/build/
+BetESS/.dat*
+BetESS/.repl_history
+BetESS/build/
 
 ## Documentation cache and generated files:
-./BetESS/.yardoc/
-./BetESS/_yardoc/
-./BetESS/doc/
-./BetESS/rdoc/
+BetESS/.yardoc/
+BetESS/_yardoc/
+BetESS/doc/
+BetESS/rdoc/
 
 ## Environment normalization:
-./BetESS/.bundle/
-./BetESS/vendor/bundle
-./BetESS/lib/bundler/man/
+BetESS/.bundle/
+BetESS/vendor/bundle
+BetESS/lib/bundler/man/
 
 # for a library or gem, you might want to ignore these files since the code is
 # intended to run in multiple environments; otherwise, check them in:
@@ -85,3 +85,4 @@ fabric.properties
 
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
+BetESS/.idea/workspace.xml
