@@ -34,7 +34,7 @@ class ApostadorMenu
       when '2'
         AuxPrint.listar(Pesquisa.lista_aposta_abertas_pessoais(@apostador.lista_apostas))
       when '3'
-        AuxPrint.listar(Pesquisa.lista_apostas_pessoais)
+        AuxPrint.listar(@apostador.lista_apostas)
       when '4'
         depositar_quant
       when '5'

@@ -15,4 +15,5 @@ module Pesquisa
     return eventos.select { |_, evento| !evento.is_open && evento.resultado == Evento::EVENTO_NAO_CONCLUIDO }
   end
 
+
 end
