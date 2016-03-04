@@ -32,7 +32,28 @@ class AdministradorMenu
   end
 
   def concluir_evento
-
+    eventos_fechados = Pesquisa.get_eventos_fechados(@bet_ess.eventos)
+    AuxPrint.listar(eventos_fechados)
+    unless eventos_fechados.empty?
+      puts '###########################################################################'
+      puts '#                                                                         #'
+      puts '#   Por favor introduza o id correspondente ao evento a concluir          #'
+      puts '#                                                                         #'
+      puts '###########################################################################'
+      id = gets.chomp.to_i
+      puts '###########################################################################'
+      puts '#                                                                         #'
+      puts '#                    Por favor introduza resultado                        #'
+      puts '#       0 - Empate, 1 - Vitória da Equipa1, 2 - Vitória da Equipa2         #'
+      puts '#                                                                         #'
+      puts '###########################################################################'
+      resultado = gets.chomp.to_i
+      begin
+        @bet_ess.concluir_evento(id, resultado)
+      rescue EventoInexistenteError => e
+        puts e.message
+      end
+    end
   end
 
   def registar_bookie

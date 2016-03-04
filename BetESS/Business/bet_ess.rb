@@ -56,4 +56,10 @@ class BetESS
     evento = eventos_abertos[id]
     evento.fechar_evento
   end
+
+  def concluir_evento (id, resultado)
+    raise EventoInexistenteError, 'Evento inexistente, ainda aberto ou já concluído' unless @eventos.has_key?(id) && !@eventos[id].is_open && @eventos[id].resultado == Evento::EVENTO_NAO_CONCLUIDO
+    evento = @eventos[id]
+    evento.concluir_evento(resultado)
+  end
 end
