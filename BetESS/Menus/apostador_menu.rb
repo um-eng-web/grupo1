@@ -1,11 +1,11 @@
 require_relative '../Business/bet_ess'
+require_relative '../Business/pesquisa'
 class ApostadorMenu
-  attr_accessor :bet_ess, :apostador, :search
+  attr_accessor :bet_ess, :apostador
 
   def initialize(bet_ess, apostador)
     @bet_ess = bet_ess
     @apostador =  apostador
-    @search = Pesquisa.new()
   end
 
   def menu_apostador
@@ -38,16 +38,12 @@ class ApostadorMenu
       when '6'
         ver_notificacoes
       when '0'
-        sair = 0
-        mp = MenuPrincipal.new
-        mp.menu_principal
+        sair = 1
       else
         puts 'Opção inválida'
     end
-    if sair!=1
-      @apostador = @bet_ess.get_user(@apostador.email)
-      menu_apostador
-    end
+    menu_apostador unless sair ==1
+      #@apostador = @bet_ess.get_user(@apostador.email)
   end
 
   def depositar_quant
@@ -75,6 +71,63 @@ class ApostadorMenu
     end
   end
 
+  def menu_aposta
+    puts '##############################   Aposta   #################################'
+    listagem = Pesquisa.get_eventos_abertos(@bet_ess.eventos)
+      AuxPrint.listar(listagem)
+      unless listagem.empty?
+        puts '#                                                                         #'
+        puts '#   Por favor introduza o id correspondente à aposta                      #'
+        puts '#                                                                         #'
+        puts '###########################################################################'
+        id = gets.chomp.to_i
+        begin
+          event = @bet_ess.get_evento_aberto(id)
+          boolean opt_fora_de_intervalo = false
+          escolha = -1
+          while escolha <0 || escolha >2
+            if opt_fora_de_intervalo
+              puts 'Introduza uma seleção válida!'
+            else
+              puts event.to_s
+
+              puts '##############################   Aposta   #################################'
+              puts '#                                                                         #'
+              puts '#   Por favor introduza a opção:                                          #'
+              puts '#       0- Empate                                                         #'
+              puts "#       1-  #{evento.team1}                                               #"
+              puts "#       2-  #{evento.team2}                                               #"
+              puts '#                                                                         #'
+              puts '###########################################################################'
+              opt = gets.chomp.to_i
+              opt_fora_de_intervalo = escolha < 0 || escolha > 2;
+            end
+          end
+          puts '##############################   Aposta   #################################'
+          puts '#                                                                         #'
+          puts '#   Por favor introduza a quantia que deseja apostar                      #'
+          puts '#                                                                         #'
+          puts '###########################################################################'
+        end
+
+  end
+
+
+
+          System.out.println("");
+          System.out.println("");
+          System.out.println("");
+          System.out.println("");
+          System.out.println("");
+          double quant = in.nextDouble();
+          betEss.registaAposta(a, escolha, quant, this.a);
+          System.out.println("###########     Aposta efetuada!        ##########");
+          } catch (NotEnoughMoneyException | EventoInexistenteException err) {
+            System.err.println(err.getMessage());
+          }
+          }
+
+          }
 
 
 end

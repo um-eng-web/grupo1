@@ -27,7 +27,7 @@ class BetESS
   def login(email, pwd)
     raise UtilizadorInexistenteError, 'Utilizador não registado' unless @utilizadores.has_key?(email.to_sym)
     u = utilizadores[email.to_sym]
-    raise PasswordErradaError unless u.password == pwd
+    raise PasswordErradaError, 'Password incorreta' unless u.password == pwd
     u
   end
 
