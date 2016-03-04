@@ -29,4 +29,16 @@ class BetESS
     u
   end
 
+  def adiciona_quant(quantia, apostador)
+    apostador.adiciona_saldo(quantia)
+  end
+
+  def retira_quant(quantia, apostador)
+    apostador.remove_saldo(quantia)
+  end
+
+  def get_user (email)
+    @utilizadores[email.to_sym]
+  end
+
 end

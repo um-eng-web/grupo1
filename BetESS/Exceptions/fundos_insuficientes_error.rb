@@ -1,0 +1,3 @@
+class FundosInsuficientesError < StandardError
+
+end
