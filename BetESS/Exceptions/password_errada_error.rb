@@ -1,0 +1,3 @@
+class PasswordErradaError < StandardError
+
+end
