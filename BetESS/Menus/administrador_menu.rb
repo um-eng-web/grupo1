@@ -9,11 +9,11 @@ class AdministradorMenu
     @search = search
   end
 
-  def fechar_aposta
+  def fechar_evento
     
   end
 
-  def concluir_aposta
+  def concluir_evento
 
   end
 
@@ -49,8 +49,8 @@ class AdministradorMenu
     puts '###########################################################################'
     opt = gets.chomp
     case opt
-      when '1'; self.fechar_aposta
-      when '2'; self.concluir_aposta
+      when '1'; self.fechar_evento
+      when '2'; self.concluir_evento
       when '3'; self.registar_bookie
       when '0'; sair = 1
       else puts 'Opção inválida!'
