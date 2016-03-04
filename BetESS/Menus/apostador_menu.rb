@@ -32,7 +32,7 @@ class ApostadorMenu
       when '1'
         menu_aposta
       when '2'
-        AuxPrint.listar(Pesquisa.lista_aposta_abertas_pessoais(@apostador.lista_apostas))
+        AuxPrint.listar(@bet_ess.get_apostas_abertas_apostador(@apostador))
       when '3'
         AuxPrint.listar(@apostador.lista_apostas)
       when '4'
@@ -57,7 +57,7 @@ class ApostadorMenu
     puts '#                                                                         #'
     puts '###########################################################################'
     q = gets.chomp.to_f
-    @bet_ess.adiciona_quant(q,@apostador)
+    @bet_ess.adicionar_quant(q, @apostador)
     puts '#########        Saldo atualizado com sucesso        #########'
   end
   def levantar_quant
@@ -68,7 +68,7 @@ class ApostadorMenu
     puts '###########################################################################'
     q = gets.chomp.to_f
     begin
-      @bet_ess.retira_quant(q, @apostador)
+      @bet_ess.retirar_quant(q, @apostador)
       puts '#########        Saldo atualizado com sucesso        #########'
     rescue FundosInsuficientesError => e
       puts e.message

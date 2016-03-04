@@ -2,6 +2,8 @@ require_relative '../Business/bookie'
 require_relative '../Business/evento'
 require_relative '../Business/bet_ess'
 require_relative '../Menus/menu_principal'
+require_relative '../Business/pesquisa'
+require_relative '../Menus/aux_print'
 
 class BookieMenu
   attr_reader :bet_ess, :bookie
@@ -78,11 +80,13 @@ class BookieMenu
   end
 
   def listar_eventos_criados_fechados
-    # code here
+    eventos_criados_fechados = @bet_ess.get_eventos_do_bookie_fechados(@bet_ess.eventos, @bookie)
+    AuxPrint.listar(eventos_criados_fechados)
   end
 
   def listar_eventos_criados_abertos
-    # code here
+    eventos_criados_abertos = @bet_ess.get_eventos_do_bookie_abertos(@bet_ess.eventos, @bookie)
+    AuxPrint.listar(eventos_criados_abertos)
   end
 
   def mudar_odds
@@ -98,11 +102,13 @@ class BookieMenu
   end
 
   def listar_eventos_criados
-    # code here
+    eventos_criados = @bet_ess.get_eventos_do_bookie(@bet_ess.eventos, @bookie)
+    AuxPrint.listar(eventos_criados)
   end
 
   def listar_eventos_abertas
-    # code here
+    eventos_abertos = @bet_ess.get_eventos_abertos(@bet_ess.eventos)
+    AuxPrint.listar(eventos_abertos)
   end
 
 end

@@ -17,11 +17,13 @@ class MenuPrincipal
   def initialize
     @bet_ess = BetESS.new
     @bet_ess.add_utilizador(Administrador.new('123', '123', '123'))
-    b = Bookie.new('b1', 'b1', 'b1')
-    @bet_ess.add_utilizador(b)
-    @bet_ess.add_evento("FC Porto", "SL Benfica", 1.01, 1.21, 200.0, "Futebol", Time.now, b)
-    @bet_ess.add_evento("SC Braga", "Sporting CP", 1.01, 1.21, 200.0, "Futebol", Time.now, b)
-    @bet_ess.add_evento("Vitoria", "Belenenses", 200, 1.21, 1.01, "Futebol", Time.now, b)
+    b1 = Bookie.new('b1', 'b1', 'b1')
+    @bet_ess.add_utilizador(b1)
+    b2 = Bookie.new('b2', 'b2', 'b2')
+    @bet_ess.add_utilizador(b2)
+    @bet_ess.add_evento("FC Porto", "SL Benfica", 1.01, 1.21, 200.0, "Futebol", Time.now, b1)
+    @bet_ess.add_evento("SC Braga", "Sporting CP", 1.01, 1.21, 200.0, "Futebol", Time.now, b1)
+    @bet_ess.add_evento("Vitoria", "Belenenses", 200, 1.21, 1.01, "Futebol", Time.now, b2)
   end
 
   def menu_principal
