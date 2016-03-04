@@ -1,5 +1,11 @@
 require_relative '../Business/bet_ess'
 require_relative '../Exceptions/utilizador_ja_existe_error'
+require_relative '../Menus/administrador_menu'
+require_relative '../Menus/bookie_menu'
+require_relative '../Menus/apostador_menu'
+require_relative '../Exceptions/utilizador_inexistente_error'
+require_relative '../Exceptions/password_errada_error'
+
 
 class MenuPrincipal
   attr_accessor :bet_ess
@@ -16,7 +22,7 @@ class MenuPrincipal
         when '1'
             regista_user
         when '2'
-            @bet_ess.login
+            login
         when '3'
             exit 0
         else
@@ -54,10 +60,33 @@ class MenuPrincipal
     begin
       @bet_ess.add_utilizador(u)
       puts 'Registo efectuado com sucesso!'
-      rescue UtilizadorJaExisteError
-        puts 'Utilizador já se encontra registado'
+      rescue UtilizadorJaExisteError  => e
+        puts e.message
     end
   end
 
+  def login
+    puts '##################### Login  ##########################'
+    puts
+    puts '   Introduza o email                                    '
+    email = gets.chomp
+    puts '   Introduza a password                                 '
+    pwd = gets.chomp
+    begin
+      u = bet_ess.login(email, pwd)
+      if u.is_a? Apostador
+        am = ApostadorMenu.new(@bet_ess,u)
+        am.menu_apostador
+      elsif u.is_a? Bookie
+        bm = BookieMenu
+        bm.menu_bookie
+      else u.is_a? Administrador
+        adm = AdministradorMenu
+        adm.menu_administrador
+      end
+    rescue UtilizadorInexistenteError, PasswordErradaError => e
+      puts e.message
+    end
+  end
 
 end
