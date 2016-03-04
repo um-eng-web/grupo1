@@ -32,7 +32,7 @@ class AdministradorMenu
       @bet_ess.add_utilizador(bookie)
       puts 'Registo efetuado com sucesso!'
     rescue UtilizadorJaExisteError => e
-      puts "#{e.message}" 
+      puts "#{e.message}"
     end
   end
 
