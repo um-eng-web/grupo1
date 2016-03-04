@@ -21,7 +21,7 @@ class ApostadorMenu
     puts '#   3 - Listar Todas as Apostas Pessoais                                  #'
     puts '#   4 - Adicionar crédito                                                 #'
     puts '#   5 - Levantar crédito                                                  #'
-    puts "#   6 - Ver notificações (#{apostador.notificacoes.size})                                    #"
+    puts "#   6 - Ver notificações (#{apostador.notificacoes.size})                                       #"
     puts '#                                                                         #'
     puts '#   0 - Sair                                                              #'
     puts '#                                                                         #'
@@ -117,7 +117,6 @@ class ApostadorMenu
           rescue FundosInsuficientesError, EventoInexistenteError => e
             puts e.message
         end
-
     end
   end
 

@@ -1,6 +1,8 @@
 require_relative '../Business/odd'
+require "observer"
 
 class Evento
+  include Observable
   FECHAR_EVENTO = 1
   CONCLUIR_EVENTO = 2
   CHANGE_ODDS = 3
@@ -22,15 +24,17 @@ class Evento
     @closing_time = closing_time
     @bookie = bookie
     @resultado = EVENTO_NAO_CONCLUIDO
+    self.add_observer(bookie)
   end
 
   def fechar_evento
     @is_open = false
+    notify_observers(self,FECHAR_EVENTO)
   end
 
   def concluir_evento (resultado)
     @resultado = resultado
-    # TODO observer
+    notify_observers(self, CONCLUIR_EVENTO)
   end
 
   def to_s
