@@ -111,23 +111,5 @@ class ApostadorMenu
         end
 
   end
-
-
-
-          System.out.println("");
-          System.out.println("");
-          System.out.println("");
-          System.out.println("");
-          System.out.println("");
-          double quant = in.nextDouble();
-          betEss.registaAposta(a, escolha, quant, this.a);
-          System.out.println("###########     Aposta efetuada!        ##########");
-          } catch (NotEnoughMoneyException | EventoInexistenteException err) {
-            System.err.println(err.getMessage());
-          }
-          }
-
-          }
-
-
-end
+  end
+  end

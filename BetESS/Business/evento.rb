@@ -23,4 +23,8 @@ class Evento
   def fechar_evento
     @is_open = false
   end
+
+  def to_s
+    "\n\nModalidade: #{@desporto}\nEvento: #{@id}\nData de fecho: #{@closing_time.ctime}\n#{@team1} (#{@odds_atuais.odd_team1})\tEmpate (#{@odds_atuais.odd_empate})\t#{@team2} (#{@odds_atuais.odd_team2})"
+  end
 end
