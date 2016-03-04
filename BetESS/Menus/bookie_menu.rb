@@ -21,7 +21,7 @@ class BookieMenu
     puts '#   1 - Inserir evento                                                    #'
     puts '#   2 - Listar eventos Abertas                                            #'
     puts '#   3 - Listar todos os eventos criados                                   #'
-    puts '#   4 - Ver notificações (" + this.b.getNotificacoes().size() + ")         #'
+    puts "#   4 - Ver notificações (#{@bookie.notificacoes.size})                        #"
     puts '#   5 - Registar interesse num evento                                    #'
     puts '#   6 - Alterar odds de um evento                                        #'
     puts '#   7 - Listar eventos criados abertas                                    #'
@@ -90,7 +90,29 @@ class BookieMenu
   end
 
   def mudar_odds
-    # code here
+    eventos_criados_abertos = @bet_ess.get_eventos_do_bookie_abertos(@bet_ess.eventos, @bookie)
+    unless eventos_criados_abertos.empty?
+      begin
+        puts '###########################################################################'
+        puts '#                                                                         #'
+        puts '#   Por favor introduza o id correspondente ao evento a alterar           #'
+        puts '#                                                                         #'
+        puts '###########################################################################'
+        id = gets.chomp.to_i
+        evento = @bet_ess.get_evento_aberto(id)
+        self.set_new_odd(evento)
+      rescue EventoInexistenteError => e
+        puts e.message
+      end
+
+
+    end
+  end
+
+  def set_new_odd(evento)
+    begin
+
+    end
   end
 
   def registar_interesse_em_evento
