@@ -38,16 +38,12 @@ class ApostadorMenu
       when '6'
         ver_notificacoes
       when '0'
-        sair = 0
-        mp = MenuPrincipal.new
-        mp.menu_principal
+        sair = 1
       else
         puts 'Opção inválida'
     end
-    if sair!=1
-      @apostador = @bet_ess.get_user(@apostador.email)
-      menu_apostador
-    end
+    menu_apostador unless sair ==1
+      #@apostador = @bet_ess.get_user(@apostador.email)
   end
 
   def depositar_quant
@@ -75,6 +71,64 @@ class ApostadorMenu
     end
   end
 
+  def menu_aposta
+    puts '##############################   Aposta   #################################'
+
+  end
+
+
+  private void menuAposta() {
+    System.out.println("##############################   Aposta   #################################");
+    TreeMap<BetKey, Evento> listagem;
++    listagem = (TreeMap) this.p.getEventosAbertos((TreeMap<BetKey, Evento>) betEss.getEventos());
+    if (listagem.isEmpty()) {
+        System.out.println();
+    System.out.println("Não existem quaisquer apostas abertas");
+    System.out.println();
+    } else {
+        AuxPrint.listarApostasAbertas(listagem);
+    System.out.println("##############################   Aposta   #################################");
+    System.out.println("#                                                                         #");
+    System.out.println("#   Por favor introduza o id correspondente à aposta                      #");
+    System.out.println("#                                                                         #");
+    System.out.println("###########################################################################");
+    String opt = in.next();
+    int idAposta = Integer.parseInt(opt);
+    try {
+      Evento a = betEss.getEventoAberto(idAposta);
+      boolean optOutOfRange = false;
+      int escolha = -1;
+      while (escolha < 0 || escolha > 2) {
+          if (optOutOfRange) {
+              System.err.println("Introduza uma seleção válida!");
+          }
+          System.out.println(a.toString());
+          System.out.println("##############################   Aposta   #################################");
+          System.out.println("#                                                                         #");
+          System.out.println("#   Por favor introduza a opção:                                          #");
+          System.out.println("#       0- Empate                                                          #");
+          System.out.println("#       1- " + a.getTeam1() + "                                            #");
+          System.out.println("#       2- " + a.getTeam2() + "                                            #");
+          System.out.println("#                                                                         #");
+          System.out.println("###########################################################################");
+          opt = in.next();
+          escolha = Integer.parseInt(opt);
+          optOutOfRange = escolha < 0 || escolha > 2;
+          }
+          System.out.println("##############################   Aposta   #################################");
+          System.out.println("#                                                                         #");
+          System.out.println("#   Por favor introduza a quantia que deseja apostar                      #");
+          System.out.println("#                                                                         #");
+          System.out.println("###########################################################################");
+          double quant = in.nextDouble();
+          betEss.registaAposta(a, escolha, quant, this.a);
+          System.out.println("###########     Aposta efetuada!        ##########");
+          } catch (NotEnoughMoneyException | EventoInexistenteException err) {
+            System.err.println(err.getMessage());
+          }
+          }
+
+          }
 
 
 end
