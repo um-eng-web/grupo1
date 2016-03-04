@@ -62,4 +62,14 @@ class BetESS
     evento = @eventos[id]
     evento.concluir_evento(resultado)
   end
+
+  def registar_aposta(event, escolha, quantia, apostador)
+    apostador.regista_aposta(next_id_aposta, event, escolha, quantia)
+    @next_id_aposta += 1
+  end
+
+  def get_evento_aberto(id)
+    raise EventoInexistenteException, 'Não existe nenhuma aposta aberta com este identificador!' unless @eventos.has_key?(id) && @eventos[id].is_open
+    @eventos[id]
+  end
 end
