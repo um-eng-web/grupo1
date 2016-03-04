@@ -1,0 +1,3 @@
+class EventoInexistenteError < StandardError
+
+end

@@ -4,6 +4,7 @@ require_relative '../Exceptions/utilizador_ja_existe_error'
 require_relative '../Exceptions/utilizador_inexistente_error'
 require_relative '../Exceptions/password_errada_error'
 require_relative '../Business/evento'
+require_relative '../Exceptions/evento_inexistente_error'
 class BetESS
   attr_accessor :utilizadores, :eventos
   attr_reader :next_id_evento, :next_id_aposta, :saldo_inicial
@@ -46,5 +47,16 @@ class BetESS
   def get_user (email)
     @utilizadores[email.to_sym]
   end
+
+  def registar_aposta(event, escolha, quantia, apostador)
+    apostador.regista_aposta(next_id_aposta, event, escolha, quantia)
+    @next_id_aposta += 1
+  end
+
+  def get_evento_aberto(id)
+    raise EventoInexistenteException, 'Não existe nenhuma aposta aberta com este identificador!' unless @eventos.has_key?(id) && @eventos[id].is_open
+    @eventos[id]
+  end
+
 
 end
