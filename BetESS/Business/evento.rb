@@ -19,4 +19,8 @@ class Evento
     @closing_time = closing_time
     @bookie = bookie
   end
+
+  def fechar_evento
+    @is_open = false
+  end
 end

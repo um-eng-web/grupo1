@@ -4,6 +4,8 @@ require_relative '../Exceptions/utilizador_ja_existe_error'
 require_relative '../Exceptions/utilizador_inexistente_error'
 require_relative '../Exceptions/password_errada_error'
 require_relative '../Business/evento'
+require_relative '../Exceptions/evento_inexistente_error'
+
 class BetESS
   attr_accessor :utilizadores, :eventos
   attr_reader :next_id_evento, :next_id_aposta, :saldo_inicial
@@ -47,4 +49,11 @@ class BetESS
     @utilizadores[email.to_sym]
   end
 
+  def fechar_evento (id)
+    eventos_abertos = Pesquisa.get_eventos_abertos(@eventos)
+    raise EventoInexistenteError, 'Evento inexistente ou já foi fechado anteriormente!' unless eventos_abertos.has_key?(id)
+
+    evento = eventos_abertos[id]
+    evento.fechar_evento
+  end
 end

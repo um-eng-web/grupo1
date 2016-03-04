@@ -1,16 +1,34 @@
 require_relative '../Business/bookie'
 require_relative '../Exceptions/utilizador_ja_existe_error'
+require_relative '../Business/pesquisa'
+require_relative '../Business/bet_ess'
+require_relative '../Menus/aux_print'
+require_relative '../Exceptions/evento_inexistente_error'
+
 class AdministradorMenu
-  attr_reader :bet_ess, :search, :admin
+  attr_reader :bet_ess, :admin
 
   def initialize (bet_ess, admin)
     @bet_ess = bet_ess
     @admin = admin
-    @search = search
   end
 
   def fechar_evento
-    
+    eventos_abertos = Pesquisa.get_eventos_abertos(@bet_ess.eventos)
+    AuxPrint.listar(eventos_abertos)
+    unless eventos_abertos.empty?
+      puts '###########################################################################'
+      puts '#                                                                         #'
+      puts '#   Por favor introduza o id correspondente ao evento a fechar            #'
+      puts '#                                                                         #'
+      puts '###########################################################################'
+      id = gets.chomp.to_i
+      begin
+        @bet_ess.fechar_evento(id)
+      rescue EventoInexistenteError => e
+        puts e.message
+      end
+    end
   end
 
   def concluir_evento
