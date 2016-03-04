@@ -1,5 +1,8 @@
 require_relative '../Business/bet_ess'
 require_relative '../Business/pesquisa'
+require_relative '../Menus/aux_print'
+require_relative '../Exceptions/evento_inexistente_error'
+require_relative '../Exceptions/fundos_insuficientes_error'
 class ApostadorMenu
   attr_accessor :bet_ess, :apostador
 
@@ -83,23 +86,22 @@ class ApostadorMenu
         id = gets.chomp.to_i
         begin
           event = @bet_ess.get_evento_aberto(id)
-          boolean opt_fora_de_intervalo = false
+          opt_fora_de_intervalo = false
           escolha = -1
           while escolha <0 || escolha >2
             if opt_fora_de_intervalo
               puts 'Introduza uma seleção válida!'
             else
               puts event.to_s
-
               puts '##############################   Aposta   #################################'
               puts '#                                                                         #'
               puts '#   Por favor introduza a opção:                                          #'
               puts '#       0- Empate                                                         #'
-              puts "#       1-  #{evento.team1}                                               #"
-              puts "#       2-  #{evento.team2}                                               #"
+              puts "#       1-  #{event.team1}                                               #"
+              puts "#       2-  #{event.team2}                                               #"
               puts '#                                                                         #'
               puts '###########################################################################'
-              opt = gets.chomp.to_i
+              escolha = gets.chomp.to_i
               opt_fora_de_intervalo = escolha < 0 || escolha > 2;
             end
           end
@@ -108,8 +110,15 @@ class ApostadorMenu
           puts '#   Por favor introduza a quantia que deseja apostar                      #'
           puts '#                                                                         #'
           puts '###########################################################################'
+          quantia = gets.chomp.to_f
+          @bet_ess.registar_aposta(event, escolha, quantia, @apostador)
+          puts '#######################     Aposta efetuada!        #######################'
+          rescue FundosInsuficientesError, EventoInexistenteError => e
+            puts e.message
         end
 
+    end
   end
-  end
-  end
+
+end
+
