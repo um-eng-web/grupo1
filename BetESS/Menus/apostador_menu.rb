@@ -1,3 +1,4 @@
+require_relative '../Business/bet_ess'
 class ApostadorMenu
   attr_accessor :bet_ess, :apostador, :search
 
@@ -44,10 +45,36 @@ class ApostadorMenu
         puts 'Opção inválida'
     end
     if sair!=1
-      @apostador = @bet_ess.get_user(@apostador.nome)
-      menu_utilizador
+      @apostador = @bet_ess.get_user(@apostador.email)
+      menu_apostador
     end
   end
+
+  def depositar_quant
+    puts '###########################################################################'
+    puts '#                                                                         #'
+    puts '#   Por favor introduza a quantia a depositar                             #'
+    puts '#                                                                         #'
+    puts '###########################################################################'
+    q = gets.chomp.to_f
+    @bet_ess.adiciona_quant(q,@apostador)
+    puts '#########        Saldo atualizado com sucesso        #########'
+  end
+  def levantar_quant
+    puts '###########################################################################'
+    puts '#                                                                         #'
+    puts '#   Por favor introduza a quantia a levantar                              #'
+    puts '#                                                                         #'
+    puts '###########################################################################'
+    q = gets.chomp.to_f
+    begin
+      @bet_ess.retira_quant(q, @apostador)
+      puts '#########        Saldo atualizado com sucesso        #########'
+    rescue FundosInsuficientesError => e
+      puts e.message
+    end
+  end
+
 
 
 end
