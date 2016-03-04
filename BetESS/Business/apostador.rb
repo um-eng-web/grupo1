@@ -1,6 +1,7 @@
 require_relative '../Business/utilizador'
 require_relative '../Exceptions/fundos_insuficientes_error'
 require_relative '../Business/aposta_utilizador'
+require_relative '../Business/evento'
 class Apostador < Utilizador
 	attr_accessor :saldo, :lista_apostas, :notificacoes
 
@@ -25,8 +26,33 @@ class Apostador < Utilizador
     aposta_user = ApostaUtilizador.new(event, quantia, escolha, Time.now)
     @lista_apostas[id] = aposta_user
     @saldo -= quantia
-    ##ADD OBSERVER
+    event.add_observer(self)
   end
 
+  def update(evento, tipo)
+    puts 'UPPPPPPPPPPPPPPPPPPPPPPPPPPDATEEEEEEEEEEEE'
+    if tipo == Evento::CONCLUIR_EVENTO
+      puts 'Evento concluido'
+      aposta_utilizador = @lista_apostas[evento.id]
+      result = evento.resultado
+      escolha = aposta_utilizador.escolha
+      if escolha == result
+        case result
+          when Evento::EMPATE
+            q = aposta_utilizador.quantia * aposta_utilizador.odd_atuais.odd_empate
+          when Evento::EQUIPA1
+            q = aposta_utilizador.quantia * aposta_utilizador.odd_atuais.odd_team1
+          else
+            q = aposta_utilizador.quantia * aposta_utilizador.odd_atuais.odd_team2
+        end
+        @saldo += q
+        descricao = 'Parabéns, GANHASTE esta aposta!'
+      else
+        descricao = 'PERDESTE esta aposta, tenta outra vez!'
+      end
+      n = Notificacao(evento.id, q, descricao)
+      @notificacoes.push(n)
+    end
+  end
 
 	end
