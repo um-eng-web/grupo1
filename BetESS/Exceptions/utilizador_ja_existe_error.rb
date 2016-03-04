@@ -1,0 +1,3 @@
+class UtilizadorJaExisteError < StandardError
+
+end
