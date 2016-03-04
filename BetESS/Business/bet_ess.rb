@@ -1,6 +1,8 @@
 require_relative '../Business/apostador'
 require_relative '../Business/pesquisa'
 require_relative '../Exceptions/utilizador_ja_existe_error'
+require_relative '../Exceptions/utilizador_inexistente_error'
+require_relative '../Exceptions/password_errada_error'
 class BetESS
 
 
@@ -20,5 +22,11 @@ class BetESS
     @utilizadores[user.email.to_sym] = user
   end
 
+  def login(email, pwd)
+    raise UtilizadorInexistenteError, 'Utilizador não registado' unless @utilizadores.has_key?(email.to_sym)
+    u = utilizadores[email.to_sym]
+    raise PasswordErradaError unless u.password == pwd
+    u
+  end
 
 end
