@@ -91,6 +91,7 @@ class BookieMenu
 
   def mudar_odds
     eventos_criados_abertos = @bet_ess.get_eventos_do_bookie_abertos(@bet_ess.eventos, @bookie)
+    AuxPrint.listar(eventos_criados_abertos)
     unless eventos_criados_abertos.empty?
       begin
         puts '###########################################################################'
@@ -104,14 +105,18 @@ class BookieMenu
       rescue EventoInexistenteError => e
         puts e.message
       end
-
-
     end
   end
 
   def set_new_odd(evento)
     begin
-
+      puts "Introduza a odd (X,XX) para a vitória da equipa1 (#{evento.team1}):"
+      odd1 = gets.chomp.to_f
+      puts "Introduza a odd (X,XX) para a vitória da equipa2 (#{evento.team2}):"
+      odd2 = gets.chomp.to_f
+      puts 'Introduza a odd (X,XX) para o empate entre as duas equipas:'
+      odd_empate = gets.chomp.to_f
+      @bet_ess.mudar_odd(evento.id, odd1, odd2, odd_empate, @bookie)
     end
   end
 

@@ -32,7 +32,7 @@ class BetESS
   end
 
   def add_evento(equipa1, equipa2, odd1, odd_empate, odd2, desporto, hora_de_fecho, bookie)
-    evento = Evento.new(@next_id_evento, equipa1, equipa2, odd1, odd_empate, odd2, true, desporto, hora_de_fecho, bookie)
+    evento = Evento.new(@next_id_evento, equipa1.upcase, equipa2.upcase, odd1, odd_empate, odd2, true, desporto.upcase, hora_de_fecho, bookie)
     @eventos[evento.id] = evento
     @next_id_evento += 1
   end
@@ -71,5 +71,10 @@ class BetESS
   def get_evento_aberto(id)
     raise EventoInexistenteError, 'Não existe nenhuma aposta aberta com este identificador!' unless @eventos.has_key?(id) && @eventos[id].is_open
     @eventos[id]
+  end
+
+  def mudar_odd(id_evento, odd_team1, odd_team2, odd_empate, bookie)
+    evento = self.get_evento_aberto(id_evento)
+    evento.mudar_odd(odd_team1, odd_team2, odd_empate, bookie)
   end
 end

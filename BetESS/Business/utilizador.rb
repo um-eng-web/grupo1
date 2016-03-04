@@ -9,7 +9,7 @@ class Utilizador
 
   def initialize (name = '', email = '', password = '')
     @name = name
-    @email = email
+    @email = email.downcase
     @password = password
   end
 end

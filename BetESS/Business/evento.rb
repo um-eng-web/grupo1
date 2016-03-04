@@ -1,4 +1,5 @@
 require_relative '../Business/odd'
+require_relative '../Exceptions/bookie_nao_autorizado_error'
 require "observer"
 
 class Evento
@@ -15,12 +16,12 @@ class Evento
 
   def initialize (id, team1, team2, odd_team1, odd_empate, odd_team2, is_open, desporto, closing_time, bookie)
     @id = id
-    @team1, @team2 = team1, team2
+    @team1, @team2 = team1.upcase, team2.upcase
     @odd_team1, @odd_empate, @odd_team2 = odd_team1, odd_empate, odd_team2
     @odds_atuais = Odd.new(odd_team1, odd_empate, odd_team2, Time.now)
     @historico_odds = [@odds_atuais]
     @is_open = is_open
-    @desporto = desporto
+    @desporto = desporto.upcase
     @closing_time = closing_time
     @bookie = bookie
     @resultado = EVENTO_NAO_CONCLUIDO
@@ -35,6 +36,13 @@ class Evento
   def concluir_evento (resultado)
     @resultado = resultado
     notify_observers(self, CONCLUIR_EVENTO)
+  end
+
+  def mudar_odd (odd_team1, odd_team2, odd_empate, bookie)
+    raise BookieNaoAutorizadoError, 'Não tem permissões para alterar esta odd!' unless bookie == self.bookie
+    new_odd = Odd.new(odd_team1, odd_empate, odd_team2, Time.now)
+    @historico_odds.push(new_odd)
+    @odds_atuais = new_odd
   end
 
   def to_s

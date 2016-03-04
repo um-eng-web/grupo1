@@ -1,0 +1,3 @@
+class BookieNaoAutorizadoError < StandardError
+
+end
