@@ -1,11 +1,11 @@
 require_relative '../Business/bet_ess'
+require_relative '../Business/pesquisa'
 class ApostadorMenu
-  attr_accessor :bet_ess, :apostador, :search
+  attr_accessor :bet_ess, :apostador
 
   def initialize(bet_ess, apostador)
     @bet_ess = bet_ess
     @apostador =  apostador
-    @search = Pesquisa.new()
   end
 
   def menu_apostador
@@ -73,53 +73,52 @@ class ApostadorMenu
 
   def menu_aposta
     puts '##############################   Aposta   #################################'
+    listagem = Pesquisa.get_eventos_abertos(@bet_ess.eventos)
+      AuxPrint.listar(listagem)
+      unless listagem.empty?
+        puts '#                                                                         #'
+        puts '#   Por favor introduza o id correspondente à aposta                      #'
+        puts '#                                                                         #'
+        puts '###########################################################################'
+        id = gets.chomp.to_i
+        begin
+          event = @bet_ess.get_evento_aberto(id)
+          boolean opt_fora_de_intervalo = false
+          escolha = -1
+          while escolha <0 || escolha >2
+            if opt_fora_de_intervalo
+              puts 'Introduza uma seleção válida!'
+            else
+              puts event.to_s
+
+              puts '##############################   Aposta   #################################'
+              puts '#                                                                         #'
+              puts '#   Por favor introduza a opção:                                          #'
+              puts '#       0- Empate                                                         #'
+              puts "#       1-  #{evento.team1}                                               #"
+              puts "#       2-  #{evento.team2}                                               #"
+              puts '#                                                                         #'
+              puts '###########################################################################'
+              opt = gets.chomp.to_i
+              opt_fora_de_intervalo = escolha < 0 || escolha > 2;
+            end
+          end
+          puts '##############################   Aposta   #################################'
+          puts '#                                                                         #'
+          puts '#   Por favor introduza a quantia que deseja apostar                      #'
+          puts '#                                                                         #'
+          puts '###########################################################################'
+        end
 
   end
 
 
-  private void menuAposta() {
-    System.out.println("##############################   Aposta   #################################");
-    TreeMap<BetKey, Evento> listagem;
-+    listagem = (TreeMap) this.p.getEventosAbertos((TreeMap<BetKey, Evento>) betEss.getEventos());
-    if (listagem.isEmpty()) {
-        System.out.println();
-    System.out.println("Não existem quaisquer apostas abertas");
-    System.out.println();
-    } else {
-        AuxPrint.listarApostasAbertas(listagem);
-    System.out.println("##############################   Aposta   #################################");
-    System.out.println("#                                                                         #");
-    System.out.println("#   Por favor introduza o id correspondente à aposta                      #");
-    System.out.println("#                                                                         #");
-    System.out.println("###########################################################################");
-    String opt = in.next();
-    int idAposta = Integer.parseInt(opt);
-    try {
-      Evento a = betEss.getEventoAberto(idAposta);
-      boolean optOutOfRange = false;
-      int escolha = -1;
-      while (escolha < 0 || escolha > 2) {
-          if (optOutOfRange) {
-              System.err.println("Introduza uma seleção válida!");
-          }
-          System.out.println(a.toString());
-          System.out.println("##############################   Aposta   #################################");
-          System.out.println("#                                                                         #");
-          System.out.println("#   Por favor introduza a opção:                                          #");
-          System.out.println("#       0- Empate                                                          #");
-          System.out.println("#       1- " + a.getTeam1() + "                                            #");
-          System.out.println("#       2- " + a.getTeam2() + "                                            #");
-          System.out.println("#                                                                         #");
-          System.out.println("###########################################################################");
-          opt = in.next();
-          escolha = Integer.parseInt(opt);
-          optOutOfRange = escolha < 0 || escolha > 2;
-          }
-          System.out.println("##############################   Aposta   #################################");
-          System.out.println("#                                                                         #");
-          System.out.println("#   Por favor introduza a quantia que deseja apostar                      #");
-          System.out.println("#                                                                         #");
-          System.out.println("###########################################################################");
+
+          System.out.println("");
+          System.out.println("");
+          System.out.println("");
+          System.out.println("");
+          System.out.println("");
           double quant = in.nextDouble();
           betEss.registaAposta(a, escolha, quant, this.a);
           System.out.println("###########     Aposta efetuada!        ##########");
