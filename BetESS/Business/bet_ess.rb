@@ -3,17 +3,19 @@ require_relative '../Business/pesquisa'
 require_relative '../Exceptions/utilizador_ja_existe_error'
 require_relative '../Exceptions/utilizador_inexistente_error'
 require_relative '../Exceptions/password_errada_error'
+require_relative '../Business/evento'
 class BetESS
 
 
   attr_accessor :search, :utilizadores, :eventos
-  attr_reader :next_id_aposta, :saldo_inicial
+  attr_reader :next_id_evento, :next_id_aposta, :saldo_inicial
 
   def initialize
       @utilizadores = Hash.new
       @eventos = Hash.new
       @search = Pesquisa.new
       @next_id_aposta = 1
+      @next_id_evento = 1
       @saldo_inicial = 10
   end
 
@@ -29,4 +31,9 @@ class BetESS
     u
   end
 
+  def add_evento(equipa1, equipa2, odd1, odd_empate, odd2, desporto, hora_de_fecho, bookie)
+    evento = Evento.new(@next_id_evento, equipa1, equipa2, odd1, odd_empate, odd2, true, desporto, hora_de_fecho, bookie)
+    @eventos[evento.id] = evento
+    @next_id_evento += 1
+  end
 end

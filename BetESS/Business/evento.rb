@@ -1,3 +1,5 @@
+require_relative '../Business/odd'
+
 class Evento
   @@FECHAR_EVENTO = 1
   @@CONCLUIR_EVENTO = 2

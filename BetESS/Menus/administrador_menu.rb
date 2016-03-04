@@ -3,7 +3,7 @@ require_relative '../Exceptions/utilizador_ja_existe_error'
 class AdministradorMenu
   attr_reader :bet_ess, :search, :admin
 
-  def initialize
+  def initialize (bet_ess, admin)
     @bet_ess = bet_ess
     @admin = admin
     @search = search

@@ -5,13 +5,17 @@ require_relative '../Menus/bookie_menu'
 require_relative '../Menus/apostador_menu'
 require_relative '../Exceptions/utilizador_inexistente_error'
 require_relative '../Exceptions/password_errada_error'
-
+require_relative '../Business/administrador'
+require_relative '../Business/bookie'
+require_relative '../Business/apostador'
 
 class MenuPrincipal
   attr_accessor :bet_ess
 
   def initialize
     @bet_ess = BetESS.new
+    @bet_ess.add_utilizador(Administrador.new('123', '123', '123'))
+    @bet_ess.add_utilizador(Bookie.new('b1', 'b1', 'b1'))
   end
 
   def menu_principal
@@ -75,13 +79,13 @@ class MenuPrincipal
     begin
       u = bet_ess.login(email, pwd)
       if u.is_a? Apostador
-        am = ApostadorMenu.new(@bet_ess,u)
+        am = ApostadorMenu.new(@bet_ess, u)
         am.menu_apostador
       elsif u.is_a? Bookie
-        bm = BookieMenu
+        bm = BookieMenu.new(@bet_ess, u)
         bm.menu_bookie
       else u.is_a? Administrador
-        adm = AdministradorMenu
+        adm = AdministradorMenu.new(@bet_ess, u)
         adm.menu_administrador
       end
     rescue UtilizadorInexistenteError, PasswordErradaError => e
