@@ -10,7 +10,6 @@ class ApostaUtilizador < Evento
     @data = data
   end
 
-
   def to_s
     super.to_s + "\nData: #{@data.day}-#{@data.month}-#{@data.year}  #{@data.hour}:#{@data.min}\nEscolha: " +
     case(@escolha)

@@ -7,6 +7,7 @@ require_relative '../Business/evento'
 require_relative '../Exceptions/evento_inexistente_error'
 
 class BetESS
+  SALDO_INICIAL = 10
   attr_accessor :utilizadores, :eventos
   attr_reader :next_id_evento, :next_id_aposta, :saldo_inicial
   include(Pesquisa)
@@ -64,17 +65,30 @@ class BetESS
   end
 
   def registar_aposta(event, escolha, quantia, apostador)
-    apostador.regista_aposta(next_id_aposta, event, escolha, quantia)
-    @next_id_aposta += 1
+    #apostador.regista_aposta(next_id_aposta, event, escolha, quantia)
+    apostador.regista_aposta(@next_id_evento, event, escolha, quantia)
+    #@next_id_aposta += 1
   end
 
   def get_evento_aberto(id)
-    raise EventoInexistenteError, 'Não existe nenhuma aposta aberta com este identificador!' unless @eventos.has_key?(id) && @eventos[id].is_open
+    raise EventoInexistenteError, 'Não existe nenhum evento aberto com este identificador!' unless @eventos.has_key?(id) && @eventos[id].is_open
+    @eventos[id]
+  end
+
+  def get_evento(id)
+    raise EventoInexistenteError, 'Não existe nenhum evento com este identificador!' unless @eventos.has_key?(id)
     @eventos[id]
   end
 
   def mudar_odd(id_evento, odd_team1, odd_team2, odd_empate, bookie)
     evento = self.get_evento_aberto(id_evento)
     evento.mudar_odd(odd_team1, odd_team2, odd_empate, bookie)
+  end
+
+  def registar_interesse_em_evento(id_evento, bookie)
+    eventos_nao_do_bookie_abertos = get_eventos_de_outros_bookies_abertos(@eventos, bookie)
+    raise EventoInexistenteError, 'Não existe nenhum evento aberto para registar interesse com este identificador!' unless eventos_nao_do_bookie_abertos.has_key?(id_evento) && eventos_nao_do_bookie_abertos[id_evento].is_open
+    evento = eventos_nao_do_bookie_abertos[id_evento]
+    evento.add_observer(bookie)
   end
 end

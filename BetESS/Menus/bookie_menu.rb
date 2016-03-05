@@ -121,11 +121,29 @@ class BookieMenu
   end
 
   def registar_interesse_em_evento
-    # code here
+    eventos_de_outros_bookies_abertos = @bet_ess.get_eventos_de_outros_bookies_abertos(@bet_ess.eventos, @bookie)
+    AuxPrint.listar(eventos_de_outros_bookies_abertos, 'Não existem eventos para registar interesse')
+    unless eventos_de_outros_bookies_abertos.is_empty?
+      begin
+        puts '###########################################################################'
+        puts '#                                                                         #'
+        puts '#   Por favor introduza o id correspondente ao evento a alterar           #'
+        puts '#                                                                         #'
+        puts '###########################################################################'
+        id = gets.chomp.to_i
+        @bet_ess.registar_interesse_em_evento(id, @bookie)
+      rescue EventoInexistenteError => e
+        puts e.message
+      end
+    end
   end
 
   def ver_notificacoes
-    # code here
+    unless @bookie.notificacoes.empty?
+      puts '####################        Notificações        ###########################'
+      @bookie.notificacoes.each { |n| puts n.to_s(@bet_ess.get_evento(n.id_evento)) }
+      @bookie.notificacoes.clear
+    end
   end
 
   def listar_eventos_criados

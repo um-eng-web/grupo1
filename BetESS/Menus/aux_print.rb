@@ -1,10 +1,10 @@
 module AuxPrint
 
-  def AuxPrint.listar(lista)
+  def AuxPrint.listar(lista, message = 'Sem registos')
     opt=1
     cnt=1
     if lista.empty?
-      puts 'Sem registos'
+      puts message
     else
       lista.values.each{ |item|
           if cnt%10 == 0

@@ -1,7 +1,8 @@
 require_relative '../Business/evento'
+require_relative '../Business/notificacao'
 class Bookie < Utilizador
 
-  attr_accessor :eventos_bookie
+  #attr_accessor :eventos_bookie
   attr_accessor :notificacoes
 
   def initialize (nome = '', email = '', password = '', notificacoes = [])
@@ -12,13 +13,13 @@ class Bookie < Utilizador
   def update (evento, tipo)
     case tipo
       when Evento::FECHAR_EVENTO
-        n = Notificacao(evento.id, -1, "O evento foi fechado")
+        n = Notificacao.new(evento.id, -1, 'O evento foi fechado')
         @notificacoes.push(n)
       when Evento::CONCLUIR_EVENTO
-        n = Notificacao(evento.id, -1, "O evento foi concluído")
+        n = Notificacao.new(evento.id, -1, 'O evento foi concluído')
         @notificacoes.push(n)
       else
-        n = Notificacao(evento.id, -1, "As odds deste evento foram alteradas")
+        n = Notificacao.new(evento.id, -1, 'As odds deste evento foram alteradas')
         @notificacoes.push(n)
     end
   end

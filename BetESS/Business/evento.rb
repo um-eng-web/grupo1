@@ -1,6 +1,6 @@
 require_relative '../Business/odd'
 require_relative '../Exceptions/bookie_nao_autorizado_error'
-require "observer"
+require 'observer'
 
 class Evento
   include Observable
@@ -30,11 +30,13 @@ class Evento
 
   def fechar_evento
     @is_open = false
-    notify_observers(self,FECHAR_EVENTO)
+    changed
+    notify_observers(self, FECHAR_EVENTO)
   end
 
   def concluir_evento (resultado)
     @resultado = resultado
+    changed
     notify_observers(self, CONCLUIR_EVENTO)
   end
 
@@ -43,6 +45,9 @@ class Evento
     new_odd = Odd.new(odd_team1, odd_empate, odd_team2, Time.now)
     @historico_odds.push(new_odd)
     @odds_atuais = new_odd
+    # Observer
+    changed
+    notify_observers(self, Evento::CHANGE_ODDS)
   end
 
   def to_s

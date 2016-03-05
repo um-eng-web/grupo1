@@ -26,4 +26,8 @@ module Pesquisa
      eventos.select { |_, evento| evento.bookie == bookie && evento.is_open }
   end
 
+  def get_eventos_de_outros_bookies_abertos(eventos, bookie)
+    eventos.select { |_, evento| evento.bookie != bookie && evento.is_open }
+  end
+
 end

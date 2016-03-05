@@ -14,40 +14,41 @@ class ApostadorMenu
 
   def menu_apostador
     sair = 0
-    puts "#######################   Utilizador: #{apostador.nome} Saldo: #{apostador.saldo}    #########################"
-    puts '#                                                                         #'
-    puts '#   1 - Apostar                                                           #'
-    puts '#   2 - Listar Apostas Abertas Pessoais                                   #'
-    puts '#   3 - Listar Todas as Apostas Pessoais                                  #'
-    puts '#   4 - Adicionar crédito                                                 #'
-    puts '#   5 - Levantar crédito                                                  #'
-    puts "#   6 - Ver notificações (#{apostador.notificacoes.size})                                       #"
-    puts '#                                                                         #'
-    puts '#   0 - Sair                                                              #'
-    puts '#                                                                         #'
-    puts '#   Escolha uma opção:                                                    #'
-    puts '##########################################################################'
-    op = gets.chomp
-    case op
-      when '1'
-        menu_aposta
-      when '2'
-        AuxPrint.listar(@bet_ess.get_apostas_abertas_apostador(@apostador))
-      when '3'
-        AuxPrint.listar(@apostador.lista_apostas)
-      when '4'
-        depositar_quant
-      when '5'
-        levantar_quant
-      when '6'
-        ver_notificacoes
-      when '0'
-        sair = 1
-      else
-        puts 'Opção inválida'
+    while sair != 1
+      puts "#######################   Utilizador: #{apostador.nome} Saldo: #{apostador.saldo}    #########################"
+      puts '#                                                                         #'
+      puts '#   1 - Apostar                                                           #'
+      puts '#   2 - Listar Apostas Abertas Pessoais                                   #'
+      puts '#   3 - Listar Todas as Apostas Pessoais                                  #'
+      puts '#   4 - Adicionar crédito                                                 #'
+      puts '#   5 - Levantar crédito                                                  #'
+      puts "#   6 - Ver notificações (#{apostador.notificacoes.size})                                       #"
+      puts '#                                                                         #'
+      puts '#   0 - Sair                                                              #'
+      puts '#                                                                         #'
+      puts '#   Escolha uma opção:                                                    #'
+      puts '##########################################################################'
+      op = gets.chomp
+      case op
+        when '1'
+          menu_aposta
+        when '2'
+          AuxPrint.listar(@bet_ess.get_apostas_abertas_apostador(@apostador.lista_apostas))
+        when '3'
+          AuxPrint.listar(@apostador.lista_apostas)
+        when '4'
+          depositar_quant
+        when '5'
+          levantar_quant
+        when '6'
+          ver_notificacoes
+        when '0'
+          sair = 1
+        else
+          puts 'Opção inválida'
+      end
+        #@apostador = @bet_ess.get_user(@apostador.email)
     end
-    menu_apostador unless sair ==1
-      #@apostador = @bet_ess.get_user(@apostador.email)
   end
 
   def depositar_quant
@@ -77,7 +78,7 @@ class ApostadorMenu
 
   def menu_aposta
     puts '##############################   Aposta   #################################'
-    listagem = Pesquisa.get_eventos_abertos(@bet_ess.eventos)
+    listagem = @bet_ess.get_eventos_abertos(@bet_ess.eventos)
       AuxPrint.listar(listagem)
       unless listagem.empty?
         puts '#                                                                         #'
@@ -117,6 +118,14 @@ class ApostadorMenu
           rescue FundosInsuficientesError, EventoInexistenteError => e
             puts e.message
         end
+    end
+  end
+
+  def ver_notificacoes
+    unless @apostador.notificacoes.empty?
+      puts '####################        Notificações        ###########################'
+      @apostador.notificacoes.each { |n| puts n.to_s_apostador(@bet_ess.get_evento(n.id_evento)) }
+      @apostador.notificacoes.clear
     end
   end
 
