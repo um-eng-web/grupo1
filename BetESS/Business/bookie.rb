@@ -2,7 +2,7 @@ require_relative '../Business/evento'
 require_relative '../Business/notificacao'
 class Bookie < Utilizador
 
-  #attr_accessor :eventos_bookie
+
   attr_accessor :notificacoes
 
   def initialize (nome = '', email = '', password = '', notificacoes = [])

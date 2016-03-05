@@ -78,8 +78,8 @@ class AdministradorMenu
     sair = 0
     puts '#############################     Bem vindo    ############################'
     puts '#                                                                         #'
-    puts '#   1 - Fechar Aposta                                                     #'
-    puts '#   2 - Concluir Aposta                                                   #'
+    puts '#   1 - Fechar Evento                                                     #'
+    puts '#   2 - Concluir Evento                                                   #'
     puts '#   3 - Registar Novo Bookie                                              #'
     puts '#   0 - Sair                                                              #'
     puts '#                                                                         #'
