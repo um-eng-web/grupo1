@@ -1,7 +1,7 @@
 require_relative '../Business/evento'
+require_relative '../Business/utilizador'
 require_relative '../Business/notificacao'
 class Bookie < Utilizador
-
 
   attr_accessor :notificacoes
 
