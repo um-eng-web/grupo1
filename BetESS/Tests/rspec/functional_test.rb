@@ -8,10 +8,10 @@ class AdministradorTest < Minitest::Test
 
   def setup
     @bet_ess = BetESS.new()
-    #@apostador = Apostador.new('John', 'john@email.pt', '12345john')
-    #@bet_ess.add_utilizador(@apostador)
-    #@bookie = Bookie.new('Carlos', 'carlos@email.pt', '123carlos123')
-    #@bet_ess.add_utilizador(@bookie)
+    @apostador = Apostador.new('John', 'john@email.pt', '12345john')
+    @bet_ess.add_utilizador(@apostador)
+    @bookie = Bookie.new('Carlos', 'carlos@email.pt', '123carlos123')
+    @bet_ess.add_utilizador(@bookie)
   end
 
   def test_add_utilizador
@@ -20,7 +20,6 @@ class AdministradorTest < Minitest::Test
     assert_equal(utilizador,@bet_ess.utilizadores['pand@email.pt'.to_sym])
   end
 
-=begin
   def test_add_utilizador_error
     utilizador = Utilizador.new('Pablo', 'pand@email.pt', 'pablo123')
     @bet_ess.add_utilizador(utilizador)
@@ -48,8 +47,8 @@ class AdministradorTest < Minitest::Test
   end
 
   def test_adicionar_quantia
-    @bet_ess.adicionar_quant(10,@utilizador)
-    assert_equal(20,@bet_ess.utilizadores[@utilizador.email.to_sym])
+    @bet_ess.adicionar_quant(10,@apostador)
+    assert_equal(20,@bet_ess.utilizadores[@apostador.email.to_sym].saldo)
   end
 
 
