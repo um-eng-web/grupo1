@@ -51,22 +51,22 @@ class AdministradorTest < Minitest::Test
     assert_equal(20,@bet_ess.utilizadores[@apostador.email.to_sym].saldo)
   end
 
+  def test_retirar_quantia
+    @bet_ess.retirar_quant(10, @apostador)
+    assert_equal(0,@bet_ess.utilizadores[@apostador.email.to_sym].saldo)
+  end
+
+  def test_retirar_quantia_error
+    assert_raises(FundosInsuficientesError, 'Lamentamos mas não tem saldo suficiente para realizar a operação'){@bet_ess.retirar_quant(20, @apostador)}
+  end
+
+  def test_get_user
+    assert_equal(@apostador, @bet_ess.get_user('john@email.pt'))
+  end
 
 #TODO testes para os métodos em baixo:
 
 =begin
-
-  def adicionar_quant(quantia, apostador)
-    apostador.adiciona_saldo(quantia)
-  end
-
-  def retirar_quant(quantia, apostador)
-    apostador.remove_saldo(quantia)
-  end
-
-  def get_user (email)
-    @utilizadores[email.to_sym]
-  end
 
   def fechar_evento (id)
     eventos_abertos = get_eventos_abertos(@eventos)
