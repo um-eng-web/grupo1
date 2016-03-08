@@ -12,4 +12,10 @@ class Utilizador
     @email = email.downcase
     @password = password
   end
+
+  def ==(o)
+    o.class == self.class && o.nome == self.nome && o.email == self.email && o.password == self.password
+  end
+
+
 end
