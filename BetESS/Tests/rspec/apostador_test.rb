@@ -1,11 +1,11 @@
-require 'test/unit'
+require 'minitest/autorun'
 require_relative '../../Business/apostador'
+require_relative '../../Business/utilizador'
 
-class ApostadorTest < Test::Unit::TestCase
+class ApostadorTest < Minitest::Test
 
   def setup
-    @apostador = Apostador.new(10, 'Clara', 'clara@email.com', '123clara123')
-    puts "nome: #{@apostador.nome}"
+    @apostador = Apostador.new(odd_team1, odd_empate, odd_team2, data)
   end
 
   def test_init_apostador
@@ -22,7 +22,7 @@ class ApostadorTest < Test::Unit::TestCase
 
   def test_remove_saldo
     @apostador.remove_saldo(10)
-    assert_equal(10, @apostador.saldo)
+    assert_equal(0, @apostador.saldo)
   end
 
 

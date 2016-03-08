@@ -8,7 +8,7 @@ class Utilizador
   attr_reader :password
 
   def initialize (name = '', email = '', password = '')
-    @name = name
+    @nome = name
     @email = email.downcase
     @password = password
   end
