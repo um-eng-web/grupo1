@@ -66,7 +66,7 @@ class BetESS
 
   def registar_aposta(event, escolha, quantia, apostador)
     #apostador.regista_aposta(next_id_aposta, event, escolha, quantia)
-    apostador.regista_aposta(@next_id_evento, event, escolha, quantia)
+    apostador.regista_aposta(event.id, event, escolha, quantia)
     #@next_id_aposta += 1
   end
 
