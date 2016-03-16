@@ -3,6 +3,8 @@ require_relative '../../Business/bet_ess'
 require_relative '../../Business/utilizador'
 require_relative '../../Business/bookie'
 require_relative '../../Business/evento'
+require_relative '../../Business/aposta_utilizador'
+require_relative '../../Business/notificacao'
 
 class AdministradorTest < Minitest::Test
 
@@ -12,6 +14,8 @@ class AdministradorTest < Minitest::Test
     @bet_ess.add_utilizador(@apostador)
     @bookie = Bookie.new('Carlos', 'carlos@email.pt', '123carlos123')
     @bet_ess.add_utilizador(@bookie)
+    @bookie2 = Bookie.new('Broke', 'bb@email.pt', 'bb12345')
+    @bet_ess.add_utilizador(@bookie2)
   end
 
   def test_add_utilizador
@@ -142,21 +146,26 @@ end
   end
 
 
-#TODO testes para os métodos em baixo:
-
-=begin
-
-  def registar_aposta(event, escolha, quantia, apostador)
-    #apostador.regista_aposta(next_id_aposta, event, escolha, quantia)
-    apostador.regista_aposta(@next_id_evento, event, escolha, quantia)
-    #@next_id_aposta += 1
+  def test_registar_aposta
+    data = Time.now
+    id = @bet_ess.next_id_evento
+    @bet_ess.add_evento('FC Porto', 'SL Benfica', 1.01, 1.21, 200.0, 'Futebol', data, @bookie)
+    ev = @bet_ess.get_evento(id)
+    @bet_ess.registar_aposta(ev, 0, 10, @apostador)
+    utilizador = @bet_ess.utilizadores['john@email.pt'.to_sym]
+    assert_equal(utilizador.lista_apostas[1].quantia, 10)
+    assert_equal(utilizador.lista_apostas[1].escolha, 0)
   end
 
-  def registar_interesse_em_evento(id_evento, bookie)
-    eventos_nao_do_bookie_abertos = get_eventos_de_outros_bookies_abertos(@eventos, bookie)
-    raise EventoInexistenteError, 'Não existe nenhum evento aberto para registar interesse com este identificador!' unless eventos_nao_do_bookie_abertos.has_key?(id_evento) && eventos_nao_do_bookie_abertos[id_evento].is_open
-    evento = eventos_nao_do_bookie_abertos[id_evento]
-    evento.add_observer(bookie)
+  def test_registar_interesse
+    data = Time.now
+    id = @bet_ess.next_id_evento
+    @bet_ess.add_evento('FC Porto', 'SL Benfica', 1.01, 1.21, 200.0, 'Futebol', data, @bookie)
+    @bet_ess.registar_interesse_em_evento(id, @bookie2)
+    @bet_ess.mudar_odd(id, 1, 1, 1, @bookie)
+    assert_equal(1, @bet_ess.utilizadores[@bookie2.email.to_sym].notificacoes.size)
+    assert_equal(id, @bet_ess.utilizadores[@bookie2.email.to_sym].notificacoes[0].id_evento)
   end
-=end
+
+
 end
